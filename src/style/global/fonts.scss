@@ -1,0 +1,24 @@
+@font-face {
+  font-family: HurmeGeometricSans3;
+  src: url(../fonts/HurmeGeometricSans3.otf) format("opentype");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: HurmeGeometricSans3;
+  src: url(../fonts/HurmeGeometricSans3Bold.otf) format("opentype");
+  font-weight: 700;
+}
+@font-face {
+  font-family: HurmeGeometricSans3;
+  src: url(../fonts/HurmeGeometricSans3SemiBold.otf) format("opentype");
+  font-weight: 500;
+}
+@font-face {
+  font-family: HurmeGeometricSans3;
+  src: url(../fonts/HurmeGeometricSans3Light.otf) format("opentype");
+  font-weight: 300;
+}
+:root {
+  --font-humre: HurmeGeometricSans3, Helvetica, Arial, sans-serif;
+}

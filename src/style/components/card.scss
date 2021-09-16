@@ -1,0 +1,14 @@
+@use "../utils" as *;
+.card {
+  &--heading {
+    font-size: rem(22);
+    font-weight: 700;
+    text-align: left;
+  }
+  &--description {
+    font-size: rem(16);
+    line-height: rem(22);
+    font-weight: 300;
+    text-align: left;
+  }
+}

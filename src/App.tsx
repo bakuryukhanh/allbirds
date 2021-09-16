@@ -1,25 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "App.less";
+import Cart from "components/cart";
+import NavBar from "components/nav-bar";
+import PageLoading from "components/pageLoading";
+import React, { Suspense } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import "./style/styles.scss";
+const HomePage = React.lazy(() => import("routes/home"));
+const ProductPage = React.lazy(() => import("routes/product"));
+const CollectionPage = React.lazy(() => import("routes/collections"));
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <NavBar></NavBar>
+      <Cart></Cart>
+      <Switch>
+        <Route exact path="/">
+          <Suspense fallback={<PageLoading />}>
+            <HomePage />
+          </Suspense>
+        </Route>
+        <Route path="/products/:slug">
+          <Suspense fallback={<PageLoading />}>
+            <ProductPage></ProductPage>
+          </Suspense>
+        </Route>
+        <Route path="/collections/:slug">
+          <Suspense fallback={<PageLoading />}>
+            <CollectionPage></CollectionPage>
+          </Suspense>
+        </Route>
+      </Switch>
+    </BrowserRouter>
   );
 }
 

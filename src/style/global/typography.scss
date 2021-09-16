@@ -1,0 +1,77 @@
+@use "../utils" as *;
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin-top: 0;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: rem(24);
+  margin-bottom: rem(3);
+  @include breakpoint(large) {
+    font-size: rem(28);
+  }
+}
+
+h2 {
+  font-size: rem(24);
+  margin-bottom: rem(24);
+  // font-weight: 700;
+}
+h3 {
+  font-size: rem(32);
+  line-height: rem(36);
+  text-align: center;
+  // font-weight: 700;
+}
+h4 {
+  font-size: rem(16);
+  text-align: center;
+}
+a,
+a:visited,
+a:active {
+  text-decoration: none;
+  color: inherit;
+}
+.primary--heading {
+  color: #ffffff;
+  font-size: rem(48);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: rem(62.88);
+  text-align: center;
+}
+.paragraph {
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 24px;
+  margin: 12px 0px 0px;
+  text-align: center;
+}
+.small--text {
+  font-size: rem(16);
+  font-weight: 300;
+  line-height: rem(24);
+}
+.icon {
+  font-size: rem(22);
+}
+.text-left {
+  text-align: left;
+}
+.text-center {
+  text-align: center;
+}
+
+.cirle-icon {
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 50%;
+}
