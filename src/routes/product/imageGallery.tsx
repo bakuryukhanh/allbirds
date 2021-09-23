@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { PreviewModal } from "./previewModal";
 
 interface ImageGalleryProps {
-  imgs: string[] | null;
+  imgs: string[];
 }
 
 const ImageGallery: FunctionComponent<ImageGalleryProps> = (props) => {
@@ -25,7 +25,7 @@ const ImageGallery: FunctionComponent<ImageGalleryProps> = (props) => {
         index={modalIdx}
         setOpenModal={setOpenModal}
       >
-        {props.imgs?.map((img, idx) => {
+        {props.imgs.map((img, idx) => {
           return (
             <Suspense fallback={<Spin key={idx} />}>
               <SuspenseImg src={img} key={idx}></SuspenseImg>
@@ -34,9 +34,13 @@ const ImageGallery: FunctionComponent<ImageGalleryProps> = (props) => {
         })}
       </PreviewModal>
       <ImagesGrid>
-        {props.imgs?.map((img, idx) => {
+        {props.imgs.map((img, idx) => {
           return (
-            <ImageContainer onClick={handleImageClick} data-key={idx} key={idx}>
+            <ImageContainer
+              onClick={handleImageClick}
+              data-key={idx}
+              key={`image${idx}`}
+            >
               <Suspense
                 fallback={
                   <div

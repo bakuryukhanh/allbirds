@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 interface ProductCardProps {
-  title: string;
+  name: string;
   slug: string;
   price: number;
-  img: string;
+  image: string;
 }
 
 const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
@@ -14,10 +14,10 @@ const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
     <Link to={`/products/${props.slug}`}>
       <Wrapper>
         <ImageContainer>
-          <img src={props.img} alt="" />
+          <img src={props.image} alt="" />
         </ImageContainer>
         <InfoContainer>
-          <h1>{props.title}</h1>
+          <h1>{props.name}</h1>
           <p className="text-gray-700 font-light">${props.price}</p>
         </InfoContainer>
       </Wrapper>

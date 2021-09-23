@@ -10,7 +10,7 @@ export const Card: React.FC<{
 }> = (props) => {
   return (
     <Container width={props.width}>
-      <Link to={`/collections/${props.slug}`}>
+      <Link to={`${props.slug}`}>
         <ImageContainer>
           <Image src={props.image} />
         </ImageContainer>

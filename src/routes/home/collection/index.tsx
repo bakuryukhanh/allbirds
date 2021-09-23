@@ -1,14 +1,16 @@
+import { fetchCollections } from "apis/collection";
 import { Card } from "components/card";
 import Carousel from "components/slider";
 import React, { useEffect, useState } from "react";
-import { getCollections } from "serviceAPIs";
 import styled from "styled-components";
-import { CollectionType } from "types/collections";
+import { ICollectionBase } from "types/product";
 const Collections: React.FC = () => {
-  const [collections, setCollections] = useState<CollectionType[]>([]);
+  const [collections, setCollections] = useState<ICollectionBase[]>([]);
   useEffect(() => {
-    const collections = getCollections();
-    setCollections(collections);
+    (async () => {
+      const collections = await fetchCollections();
+      setCollections(collections);
+    })();
   }, []);
   return (
     <Section>
@@ -19,9 +21,9 @@ const Collections: React.FC = () => {
         {collections.map((collection, idx) => (
           <Card
             image={collection.image}
-            heading={collection.title}
-            description={collection.description}
-            slug={collection.slug}
+            heading={collection.name}
+            description={collection.shortDesc}
+            slug={`/collections/${collection.slug}`}
             width={`${100 / collections.length}%`}
             key={idx}
           ></Card>

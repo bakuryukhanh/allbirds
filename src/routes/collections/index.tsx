@@ -1,15 +1,11 @@
 import { Breadcrumb } from "antd";
+import { fetchCollectionsFromSlug } from "apis/collection";
+import { fetchCollectionsOfCategory } from "apis/product";
 import ProductCard from "components/productCard";
 import { FunctionComponent, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import {
-  getCollectionInfo,
-  getCollectionProduct,
-  getCollections,
-} from "serviceAPIs";
 import styled from "styled-components";
-import { CollectionType } from "types/collections";
-import { ProductBaseType } from "types/product";
+import { ICollection, ICollectionBase, IProductBase } from "types/product";
 
 const { Item } = Breadcrumb;
 
@@ -21,19 +17,22 @@ interface ParamsType {
 
 const CollectionPage: FunctionComponent<CollectionPageProps> = (props) => {
   const { slug } = useParams<ParamsType>();
-  const [collectionInfo, setCollectionInfo] = useState<CollectionType>();
-  const [collections, setCollection] = useState<CollectionType[]>();
-  const [products, setProducts] = useState<ProductBaseType[]>([]);
+  const [collectionInfo, setCollectionInfo] = useState<ICollection>();
+  const [collections, setCollections] = useState<ICollectionBase[]>();
+  const [products, setProducts] = useState<IProductBase[]>([]);
   useEffect(() => {
-    const products = getCollectionProduct(slug);
-    const info = getCollectionInfo(slug);
-    setCollectionInfo(info);
-    setProducts(products);
+    (async () => {
+      const response = await fetchCollectionsFromSlug(slug);
+      const collection = response[0];
+      setCollectionInfo({ ...collection });
+      setProducts(collection.products);
+      const collections = await fetchCollectionsOfCategory(
+        collection.category._id
+      );
+      setCollections(collections);
+    })();
   }, [slug]);
-  useEffect(() => {
-    const collections = getCollections();
-    setCollection(collections);
-  }, []);
+
   if (!collectionInfo || !products || !collections) {
     return <div></div>;
   }
@@ -46,7 +45,12 @@ const CollectionPage: FunctionComponent<CollectionPageProps> = (props) => {
               <Link to="/">Home</Link>
             </Item>
             <Item>
-              <h1 className="font-semibold text-lg">{collectionInfo.title}</h1>
+              <Link to={`/categories/${collectionInfo.category.slug}`}>
+                {collectionInfo.category.name}
+              </Link>
+            </Item>
+            <Item>
+              <h1 className="font-semibold text-lg">{collectionInfo.name}</h1>
             </Item>
           </Breadcrumb>
           <div>
@@ -55,19 +59,23 @@ const CollectionPage: FunctionComponent<CollectionPageProps> = (props) => {
                 className="text-light text-sm text-gray-500 my-3 block hover:underline"
                 to={`/collections/${collection.slug}`}
               >
-                {collection.title}
+                {collection.name}
               </Link>
             ))}
           </div>
         </SideWrapper>
         <MainWrapper>
-          <h1 className="font-semibold">{collectionInfo?.title}</h1>
-          <p className="font-light text-sm mb-8">
-            {collectionInfo?.description}
-          </p>
+          <h1 className="font-semibold">{collectionInfo?.name}</h1>
+          <p className="font-light text-sm mb-8">{collectionInfo?.shortDesc}</p>
           <ProductsWrapper>
             {products.map((product, idx) => {
-              return <ProductCard {...product} key={idx}></ProductCard>;
+              return (
+                <ProductCard
+                  {...product}
+                  image={product.bannerImage}
+                  key={idx}
+                ></ProductCard>
+              );
             })}
           </ProductsWrapper>
         </MainWrapper>

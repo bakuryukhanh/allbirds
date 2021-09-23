@@ -6,6 +6,7 @@ interface ColorButtonProps {
   colorCode: string;
   colorSlug: string;
   className: string;
+  background: string;
   selected?: boolean;
 }
 
@@ -17,11 +18,16 @@ const ColorButton: FunctionComponent<ColorButtonProps> = (props) => {
       onClick={props.onClick}
       className={props.className}
       selected={props.selected}
+      background={props.background}
     ></Wrapper>
   );
 };
 
-const Wrapper = styled.div<{ color: string; selected: boolean | undefined }>`
+const Wrapper = styled.div<{
+  color: string;
+  selected: boolean | undefined;
+  background: string;
+}>`
   cursor: pointer;
   background-color: ${(props) => props.color};
   height: 50px;
@@ -30,8 +36,8 @@ const Wrapper = styled.div<{ color: string; selected: boolean | undefined }>`
   border-radius: 50%;
   box-shadow: var(--soft-shadow);
   position: relative;
-
-  ${(props) => (props.selected ? borderSelected : null)}
+  background: ${(props) => props.background};
+  ${(props) => (props.selected ? borderSelected : null)};
 `;
 const borderSelected = ` &:before {
     content: "";

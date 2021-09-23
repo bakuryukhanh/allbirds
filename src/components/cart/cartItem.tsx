@@ -4,10 +4,10 @@ import { FunctionComponent } from "react";
 import { Link } from "react-router-dom";
 import { updateQuantity } from "store/slices/cartSlice";
 import styled from "styled-components";
-import { CartItemType } from "types/cart";
+import { ICartItem } from "types/cart";
 
 interface CartItemProps {
-  item: CartItemType;
+  item: ICartItem;
 }
 
 const CartItem: FunctionComponent<CartItemProps> = (props) => {
@@ -36,7 +36,7 @@ const CartItem: FunctionComponent<CartItemProps> = (props) => {
         onClick={handleRemoveItem}
       />
       <ImageWrapper>
-        <img src={props.item.image} alt="" />
+        <img src={props.item.color.images[0]} alt="" />
       </ImageWrapper>
       <ContentWrapper>
         <Link
@@ -45,8 +45,8 @@ const CartItem: FunctionComponent<CartItemProps> = (props) => {
         >
           {props.item.name}
         </Link>
-        <p className="text-sm font-light">{props.item.color}</p>
-        <p className="text-sm font-light">Size: {props.item.size}</p>
+        <p className="text-sm font-light">{props.item.color.name}</p>
+        <p className="text-sm font-light">Size: {props.item.size.name}</p>
         <QuantityInputWrapper>
           <button onClick={handleDecreaseQuantity}>-</button>
           <span className="text-center">{props.item.quantity}</span>

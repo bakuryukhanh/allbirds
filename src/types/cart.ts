@@ -1,9 +1,6 @@
-export type CartItemType = {
-  name: string;
-  slug: string;
-  color: string;
-  price: number;
-  size: number;
-  image: string;
+import { IProduct, IProductColor, IProductSize } from "./product";
+export interface ICartItem extends IProduct {
+  color: IProductColor;
+  size: IProductSize;
   quantity: number;
-};
+}

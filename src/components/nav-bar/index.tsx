@@ -6,6 +6,7 @@ import logo from "assets/logo.svg";
 import { useAppDispatch, useAppSelector } from "hooks/storeHooks";
 import { openCart } from "store/slices/cartSlice";
 const NavBar: React.FC = () => {
+  const authState = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const countItems = useAppSelector((state) => state.cart.countItems);
   const handleCartClick = () => {
@@ -44,13 +45,22 @@ const NavBar: React.FC = () => {
             </ul>
           </LinkContainer>
           <IconContainer>
-            <Link to="">
-              <img
-                src="//cdn.allbirds.com/image/upload/v1571355713/icons/user.svg"
-                alt=""
-              />
-            </Link>
-            <Link to="">
+            {!authState.isAuth ? (
+              <Link to="/login">
+                <img
+                  src="//cdn.allbirds.com/image/upload/v1571355713/icons/user.svg"
+                  alt=""
+                />
+              </Link>
+            ) : (
+              <Link to="/user">
+                <img
+                  src="//cdn.allbirds.com/image/upload/v1571355713/icons/user.svg"
+                  alt=""
+                />
+              </Link>
+            )}
+            <Link to="/help">
               <img
                 src="//cdn.allbirds.com/image/upload/v1571947807/icons/help.svg"
                 alt=""

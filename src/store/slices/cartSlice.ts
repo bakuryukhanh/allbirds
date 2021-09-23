@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CartItemType } from "types/cart";
+import { ICartItem } from "types/cart";
 
 // Define a type for the slice state
 interface CartState {
   total: number;
   countItems: number;
   isOpen: boolean;
-  items: CartItemType[];
+  items: ICartItem[];
 }
 
 // Define the initial state using that type
@@ -17,33 +17,29 @@ const initialState: CartState = {
   items: [],
 };
 
-const findItemIdx = (array: CartItemType[], item: CartItemType) => {
+const findItemIdx = (array: ICartItem[], item: ICartItem) => {
   for (let i = 0; i < array.length; i++) {
-    if (
-      array[i].slug === item.slug &&
-      array[i].color === item.color &&
-      array[i].size === item.size
-    ) {
+    if (array[i].size._id === item.size._id) {
       return i;
     }
   }
   return -1;
 };
 
-const countTotal = (array: CartItemType[]) => {
+const countTotal = (array: ICartItem[]) => {
   return array.reduce((prev, current) => {
     return prev + current.quantity * current.price;
   }, 0);
 };
 
-const countItems = (array: CartItemType[]) => {
+const countItems = (array: ICartItem[]) => {
   return array.reduce((prev, current) => {
     return prev + current.quantity;
   }, 0);
 };
 
 export const cartSlice = createSlice({
-  name: "counter",
+  name: "cart",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
@@ -55,7 +51,7 @@ export const cartSlice = createSlice({
     },
     updateQuantity: (
       state,
-      action: PayloadAction<{ item: CartItemType; quantity: number }>
+      action: PayloadAction<{ item: ICartItem; quantity: number }>
     ) => {
       const idx = findItemIdx(state.items, action.payload.item);
       if (idx !== -1) {
@@ -68,7 +64,7 @@ export const cartSlice = createSlice({
         state.countItems = countItems(state.items);
       }
     },
-    addItem2Cart: (state, action: PayloadAction<{ item: CartItemType }>) => {
+    addItem2Cart: (state, action: PayloadAction<{ item: ICartItem }>) => {
       //check if item exist
       const idx = findItemIdx(state.items, action.payload.item);
       if (idx !== -1) {
